@@ -22,7 +22,11 @@
       --accent-2: #0aa39a;
       --accent-soft: rgba(0, 124, 114, .11);
       --lime: #b9ef71;
-      --nav-bg: rgba(245, 247, 248, .84);
+      --nav-bg: rgba(255, 255, 255, .52);
+      --nav-sheen: rgba(255, 255, 255, .38);
+      --nav-edge: rgba(9, 32, 35, .09);
+      --nav-highlight: rgba(255, 255, 255, .65);
+      --nav-shadow: 0 14px 34px rgba(17, 42, 45, .12);
       --shadow: 0 24px 70px rgba(17, 42, 45, .13);
       --danger: #c74a4a;
     }
@@ -40,7 +44,11 @@
         --accent-2: #1aaea1;
         --accent-soft: rgba(70, 217, 201, .12);
         --lime: #c5f277;
-        --nav-bg: rgba(7, 16, 17, .82);
+        --nav-bg: rgba(10, 22, 24, .48);
+        --nav-sheen: rgba(255, 255, 255, .07);
+        --nav-edge: rgba(211, 242, 237, .1);
+        --nav-highlight: rgba(255, 255, 255, .12);
+        --nav-shadow: 0 14px 38px rgba(0, 0, 0, .42);
         --shadow: 0 24px 90px rgba(0, 0, 0, .35);
         --danger: #ff7a7a;
       }
@@ -93,12 +101,22 @@
       position: sticky;
       top: 0;
       z-index: 50;
-      border-bottom: 1px solid transparent;
-      background: var(--nav-bg);
-      backdrop-filter: blur(18px);
-      transition: border-color .2s ease;
+      border-bottom: 1px solid var(--nav-edge);
+      background:
+        linear-gradient(180deg, var(--nav-sheen), transparent 55%),
+        var(--nav-bg);
+      -webkit-backdrop-filter: blur(22px) saturate(170%);
+      backdrop-filter: blur(22px) saturate(170%);
+      box-shadow: inset 0 1px 0 var(--nav-highlight);
+      transition: border-color .2s ease, box-shadow .25s ease;
     }
-    .nav.scrolled { border-color: var(--line); }
+    .nav.scrolled {
+      border-color: var(--line);
+      box-shadow: inset 0 1px 0 var(--nav-highlight), var(--nav-shadow);
+    }
+    @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+      .nav { background: var(--bg); }
+    }
     .nav-inner { min-height: 72px; display: flex; align-items: center; justify-content: flex-end; gap: 34px; }
     .nav-links { display: flex; align-items: center; gap: 28px; margin-right: auto; }
     .nav-links a { text-decoration: none; font-size: .93rem; font-weight: 650; color: var(--muted); }
